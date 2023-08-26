@@ -12,7 +12,6 @@
     "isolatedModules": true,
     "moduleResolution": "node",
     "jsx": "preserve",
-    // "incremental": true,
     "plugins": [
       {
         "name": "next"

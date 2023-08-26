@@ -8,19 +8,14 @@ interface InputProp {
 
 export const Input = (): JSX.Element => {
   return (
-    <div className="mb-6">
-      <label
-        className="block text-gray-700 text-sm font-bold mb-2"
-      >
-        Password
-      </label>
+    <div className="max-w-screen-sm relative rounded-md shadow-sm text-2xl font-mono">
+      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+        <span className="text-gray-500">$</span>
+      </div>
       <input
-        className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+        className="bg-slate-200 text-right text-blue-900 p-3 font-semibold block w-full rounded-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-500" placeholder="0.00"
         id="password"
-        type="password"
-        placeholder="******************"
       />
-      <p className="text-red-500 text-xs italic">Please choose a password.</p>
     </div>
   );
 };
