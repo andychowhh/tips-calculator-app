@@ -1,7 +1,7 @@
 import React from "react";
 
 interface TipsPercentageButtonProp {
-  value?: string | null;
+  value?: string;
   isCustomized: boolean;
   onClick: () => void;
 }
@@ -11,15 +11,26 @@ export const TipsPercentageButton = ({
   onClick,
   isCustomized = false,
 }: TipsPercentageButtonProp): JSX.Element => {
+  const sharedClass =
+    "w-24 px-5 py-1 box-content font-mono text-2xl text-center rounded";
   return isCustomized ? (
     <input
-      className="bg-slate font-mono text-2xl text-cyan text-center px-7 py-1 rounded hover:bg-teal hover:text-cyan"
+      placeholder="Custom"
+      value={value}
+      onFocus={(e) => (e.target.placeholder = "")}
+      onBlur={(e) => e.target.placeholder = "Custom"}
       onClick={onClick}
-      value={value ?? "Custom"}
+      className={
+        sharedClass +
+        " bg-slate text-cyan placeholder:text-cyan hover:outline-teal hover:outline hover:outline-2 hover:text-cyan"
+      }
     />
   ) : (
     <button
-      className="font-mono text-2xl text-white box-content bg-cyan px-7 py-1 rounded hover:bg-teal hover:text-cyan"
+      className={
+        sharedClass +
+        " bg-cyan text-white placeholder:text-cyan hover:bg-teal hover:text-cyan"
+      }
       onClick={onClick}
     >
       {value}%

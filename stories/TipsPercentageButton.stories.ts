@@ -8,16 +8,24 @@ const meta: Meta<typeof TipsPercentageButton> = {
   tags: ["autodocs"],
   parameters: {
     // More on how to position stories at: https://storybook.js.org/docs/react/configure/story-layout
-    layout: 'centered',
+    layout: "centered",
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const TipsPercentageButtonUnmodified: Story = {
+export const TipsPercentageButtonComponent: Story = {
   args: {
     value: 5,
-    onClick: () => null
+    isCustomized: false,
+    onClick: () => null,
+  },
+};
+
+export const TipsPercentageButtonCustomized: Story = {
+  args: {
+    isCustomized: true,
+    onClick: () => null,
   },
 };
