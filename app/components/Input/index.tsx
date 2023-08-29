@@ -1,11 +1,11 @@
-'use client'
+"use client";
 
 import React from "react";
 
 interface InputProp {
   icon?: string;
   value: number;
-  onChange: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input = ({ value, onChange }: InputProp): JSX.Element => {
@@ -18,7 +18,7 @@ export const Input = ({ value, onChange }: InputProp): JSX.Element => {
         className={`outline-none bg-slate text-right text-blue-900 p-3 font-semibold border border-2 border-slate-500 block w-full rounded-md hover:border-teal placeholder:text-gray-400`}
         placeholder="0.00"
         value={value}
-        onChange={onChange}
+        onChange={(e) => onChange(e)}
       />
     </div>
   );
