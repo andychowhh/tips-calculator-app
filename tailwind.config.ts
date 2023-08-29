@@ -16,6 +16,7 @@ const config: Config = {
       },
       colors: {
         teal: colors.teal[400],
+        lightTeal: colors.teal[200],
         cyan: colors.cyan[900],
         slate: colors.slate[200]
       },

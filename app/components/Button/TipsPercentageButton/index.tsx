@@ -29,7 +29,7 @@ export const TipsPercentageButton = ({
     <button
       className={
         sharedClass +
-        " bg-cyan text-white placeholder:text-cyan hover:bg-teal hover:text-cyan"
+        " bg-cyan text-white placeholder:text-cyan hover:bg-lightTeal hover:text-cyan"
       }
       onClick={onClick}
     >
