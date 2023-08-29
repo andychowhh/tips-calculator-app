@@ -1,3 +1,5 @@
+'use client'
+
 import React from "react";
 
 interface TipsPercentageButtonProp {
@@ -12,7 +14,7 @@ export const TipsPercentageButton = ({
   isCustomized = false,
 }: TipsPercentageButtonProp): JSX.Element => {
   const sharedClass =
-    "w-24 px-5 py-1 box-content font-mono text-2xl text-center rounded";
+    "px-5 py-1 box-content font-mono text-2xl text-center rounded";
   return isCustomized ? (
     <input
       placeholder="Custom"

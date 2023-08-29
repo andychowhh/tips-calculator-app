@@ -1,3 +1,5 @@
+'use client'
+
 import React from "react";
 
 interface AmountBlock {
@@ -7,7 +9,7 @@ interface AmountBlock {
 
 const AmountBlock = ({ field, amount = 0 }: AmountBlock): JSX.Element => {
   return (
-    <div className="flex justify-between mb-12">
+    <div className="flex justify-between mb-10">
       <div className="flex flex-col justify-items-start text-start">
         <div className="text-white">{field}</div>
         <div className="text-zinc-400">/ person</div>
@@ -31,7 +33,7 @@ export const Result = ({
   onResetClicked,
 }: ResultProp): JSX.Element => {
   return (
-    <div className="bg-cyan px-8 py-10 font-mono text-center rounded">
+    <div className="bg-cyan px-8 py-9 font-mono text-center rounded">
       <AmountBlock field="Tip Amount" amount={tipAmountPerPerson} />
       <AmountBlock field="Total" amount={totalAmountPerPerson} />
       <button
