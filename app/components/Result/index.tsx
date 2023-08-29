@@ -5,14 +5,16 @@ interface AmountBlock {
   amount: number;
 }
 
-const AmountBlock = (): JSX.Element => {
+const AmountBlock = ({ field, amount = 0 }: AmountBlock): JSX.Element => {
   return (
     <div className="flex justify-between mb-12">
       <div className="flex flex-col justify-items-start text-start">
-        <div className="text-white">Tip Amount</div>
+        <div className="text-white">{field}</div>
         <div className="text-zinc-400">/ person</div>
       </div>
-      <div className="text-teal text-4xl font-bold">$0.00</div>
+      <div className="text-teal text-4xl font-bold">
+        ${Number(amount.toString()).toFixed(2)}
+      </div>
     </div>
   );
 };
@@ -30,9 +32,14 @@ export const Result = ({
 }: ResultProp): JSX.Element => {
   return (
     <div className="bg-cyan px-8 py-10 font-mono text-center rounded">
-      <AmountBlock />
-      <AmountBlock />
-      <button className="bg-teal text-cyan text-center text-xl font-semibold rounded w-full py-4 hover:bg-lightTeal" onClick={onResetClicked}>RESET</button>
+      <AmountBlock field="Tip Amount" amount={tipAmountPerPerson} />
+      <AmountBlock field="Total" amount={totalAmountPerPerson} />
+      <button
+        className="bg-teal text-cyan text-center text-xl font-semibold rounded w-full py-4 hover:bg-lightTeal"
+        onClick={onResetClicked}
+      >
+        RESET
+      </button>
     </div>
   );
 };
