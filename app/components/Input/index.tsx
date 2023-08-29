@@ -13,7 +13,7 @@ export const Input = ({ value, onChange }: InputProp): JSX.Element => {
         <span className="text-gray-500">$</span>
       </div>
       <input
-        className={`outline-none bg-slate-200 text-right text-blue-900 p-3 font-semibold border border-2 border-slate-500 block w-full rounded-md hover:border-teal placeholder:text-gray-400`}
+        className={`outline-none bg-slate text-right text-blue-900 p-3 font-semibold border border-2 border-slate-500 block w-full rounded-md hover:border-teal placeholder:text-gray-400`}
         placeholder="0.00"
         value={value}
         onChange={onChange}
