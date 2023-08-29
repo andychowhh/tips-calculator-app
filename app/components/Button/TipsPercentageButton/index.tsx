@@ -16,9 +16,9 @@ export const TipsPercentageButton = ({
   return isCustomized ? (
     <input
       placeholder="Custom"
-      value={value}
+      value={value ? `${value}%` : ""}
       onFocus={(e) => (e.target.placeholder = "")}
-      onBlur={(e) => e.target.placeholder = "Custom"}
+      onBlur={(e) => (e.target.placeholder = "Custom")}
       onClick={onClick}
       className={
         sharedClass +
