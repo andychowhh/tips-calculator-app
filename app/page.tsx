@@ -5,10 +5,10 @@ import { Input, TipsPercentageButton, Result } from "app/components";
 import { calculateTipAmount } from "app/utils";
 
 export default function Home() {
-  const [billAmount, setBillAmount] = useState<number>(0);
+  const [billAmount, setBillAmount] = useState<string>("");
   const [isTipCustomized, setIsTipCustomized] = useState<boolean>(false);
   const [selectedTipPercentage, setSelectedTipPercentage] = useState<number>(0);
-  const [numberOfPeople, setNumberOfPeople] = useState<number>(0);
+  const [numberOfPeople, setNumberOfPeople] = useState<string>("");
 
   const onTipPercentageButtonClicked = (
     amount: number,
@@ -24,7 +24,12 @@ export default function Home() {
         <span className="">Bill</span>
         <Input
           value={billAmount}
-          onChange={(e) => setBillAmount(parseFloat(e.target.value) || 0)}
+          onChange={(e) => {
+            const amount = e.target.value;
+            if (amount === "" || amount.match(/^\d{1,}(\.\d{0,4})?$/)) {
+              setBillAmount(e.target.value);
+            }
+          }}
         />
       </div>
       <div className="">
@@ -76,13 +81,20 @@ export default function Home() {
         <span>Number of People</span>
         <Input
           value={numberOfPeople}
-          onChange={(e) => setNumberOfPeople(parseInt(e.target.value) || 0)}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const regex = /^[0-9]*$/;
+
+            if (regex.test(newValue) || newValue === "") {
+              setNumberOfPeople(newValue);
+            }
+          }}
         />
       </div>
       <Result
         tipAmountPerPerson={calculateTipAmount(
-          billAmount,
-          numberOfPeople,
+          parseFloat(billAmount),
+          parseInt(numberOfPeople),
           selectedTipPercentage
         )}
         totalAmountPerPerson={0}
