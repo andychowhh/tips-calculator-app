@@ -33,7 +33,7 @@ export const Result = ({
   onResetClicked,
 }: ResultProp): JSX.Element => {
   return (
-    <div className="bg-cyan px-8 py-9 font-mono text-center rounded">
+    <div className="bg-cyan px-8 py-9 font-mono text-center rounded md:flex-1">
       <AmountBlock field="Tip Amount" amount={tipAmountPerPerson} />
       <AmountBlock field="Total" amount={totalAmountPerPerson} />
       <button
