@@ -44,6 +44,7 @@ export default function Home() {
         <div className="">
           <span className="">Bill</span>
           <Input
+            withDollarSign={true}
             value={billAmount}
             onChange={(e) => {
               const amount = e.target.value;
@@ -109,6 +110,7 @@ export default function Home() {
         <div className="">
           <span>Number of People</span>
           <Input
+            withDollarSign={false}
             value={numberOfPeople}
             onChange={(e) => {
               const newValue = e.target.value;
