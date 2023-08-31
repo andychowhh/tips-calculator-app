@@ -28,6 +28,14 @@ export default function Home() {
     }
   };
 
+  const onResetClicked = () : void => {
+    setBillAmount("");
+    setSelectedTipPercentage("");
+    setCustomizedTipPercentage("");
+    setNumberOfPeople("");
+    setIsTipCustomized(false);
+  }
+ 
   return (
     <main className="flex flex-col justify-between min-h-screen bg-white font-mono text-cyan p-5">
       <div className="">
@@ -106,7 +114,7 @@ export default function Home() {
           parseInt(selectedTipPercentage)
         )}
         totalAmountPerPerson={0}
-        onResetClicked={() => null}
+        onResetClicked={onResetClicked}
       />
     </main>
   );
