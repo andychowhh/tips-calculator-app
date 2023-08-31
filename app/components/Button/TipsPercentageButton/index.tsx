@@ -27,7 +27,7 @@ export const TipsPercentageButton = ({
       onChange={(e) => onClick(e.target.value)}
       className={
         sharedClass +
-        " bg-slate text-cyan placeholder:text-cyan hover:outline-teal hover:outline hover:outline-2 hover:text-cyan"
+        " bg-slate text-cyan placeholder:text-cyan hover:outline-teal hover:outline hover:outline-2 hover:text-cyan" 
       }
     />
   ) : (
