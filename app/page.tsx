@@ -77,7 +77,7 @@ export default function Home() {
           />
           <TipsPercentageButton
             isCustomized={true}
-            isSelected={false}
+            isSelected={isTipCustomized}
             value={customizedTipPercentage?.toString()}
             onClick={(val) => {
               onTipPercentageButtonClicked(parseFloat(val ?? "") ?? 0, true);
