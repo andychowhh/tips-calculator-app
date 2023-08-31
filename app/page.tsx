@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Input, TipsPercentageButton, Result } from "app/components";
-import { calculateTipAmount } from "app/utils";
+import { calculateTipAmount, calculateTotalAmountAmount } from "app/utils";
 
 export default function Home() {
   const [billAmount, setBillAmount] = useState<string>("");
@@ -113,7 +113,11 @@ export default function Home() {
           parseInt(numberOfPeople),
           parseInt(selectedTipPercentage)
         )}
-        totalAmountPerPerson={0}
+        totalAmountPerPerson={calculateTotalAmountAmount(
+          parseFloat(billAmount),
+          parseInt(numberOfPeople),
+          parseInt(selectedTipPercentage)
+        )}
         onResetClicked={onResetClicked}
       />
     </main>
