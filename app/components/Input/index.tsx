@@ -14,7 +14,7 @@ export const Input = ({
   onChange,
 }: InputProp): JSX.Element => {
   return (
-    <div className="relative max-w-xs rounded-md shadow-sm text-2xl font-mono">
+    <div className="relative max-w-3xl rounded-md shadow-sm text-2xl font-mono">
       {withDollarSign && (
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
           <span className="text-gray-500">$</span>
