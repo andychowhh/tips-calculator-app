@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 export const InputWithDollarSign: Story = {
   args: {
     withDollarSign: true,
-    value: 50,
+    value: "50",
     onChange: () => null,
   },
 };
@@ -26,7 +26,7 @@ export const InputWithDollarSign: Story = {
 export const InputWithoutDollarSign: Story = {
   args: {
     withDollarSign: false,
-    value: 50,
+    value: "50",
     onChange: () => null,
   },
 };
