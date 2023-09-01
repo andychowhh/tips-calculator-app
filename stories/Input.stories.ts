@@ -8,11 +8,25 @@ const meta: Meta<typeof Input> = {
   tags: ["autodocs"],
   parameters: {
     // More on how to position stories at: https://storybook.js.org/docs/react/configure/story-layout
-    layout: "fullscreen",
+    layout: "centered",
   },
-}
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const InputComponent: Story = {};
+export const InputWithDollarSign: Story = {
+  args: {
+    withDollarSign: true,
+    value: 50,
+    onChange: () => null,
+  },
+};
+
+export const InputWithoutDollarSign: Story = {
+  args: {
+    withDollarSign: false,
+    value: 50,
+    onChange: () => null,
+  },
+};
