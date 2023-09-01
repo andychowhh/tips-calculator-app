@@ -8,8 +8,6 @@ Reference: https://www.frontendmentor.io/challenges/tip-calculator-app-ugJNGbJUX
 
 [**Try out the demo!**](https://tips-calculator-app-andychowhh.vercel.app/)
 
-![](github/demo.gif)
-
 ## Build and run
 
 ### To Run Locally:
