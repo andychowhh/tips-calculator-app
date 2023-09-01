@@ -17,7 +17,8 @@ type Story = StoryObj<typeof meta>;
 
 export const TipsPercentageButtonComponent: Story = {
   args: {
-    value: 5,
+    value: "5",
+    isSelected: false,
     isCustomized: false,
     onClick: () => null,
   },
@@ -25,6 +26,7 @@ export const TipsPercentageButtonComponent: Story = {
 
 export const TipsPercentageButtonCustomized: Story = {
   args: {
+    isSelected: false,
     isCustomized: true,
     onClick: () => null,
   },
