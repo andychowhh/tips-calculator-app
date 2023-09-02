@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { Input, TipsPercentageButton, Result } from "app/components";
 import { calculateTipAmount, calculateTotalAmountAmount } from "app/utils";
 
@@ -15,6 +15,18 @@ export default function Home() {
   >("");
   const [numberOfPeople, setNumberOfPeople] = useState<string>("");
 
+  const tipAmountPerPerson = calculateTipAmount(
+    parseFloat(billAmount),
+    parseInt(numberOfPeople),
+    parseInt(selectedTipPercentage)
+  );
+
+  const totalAmountPerPerson = calculateTotalAmountAmount(
+    parseFloat(billAmount),
+    parseInt(numberOfPeople),
+    parseInt(selectedTipPercentage)
+  );
+
   const onTipPercentageButtonClicked = (
     amount: number,
     isCustomized: boolean
@@ -27,6 +39,22 @@ export default function Home() {
       setIsTipCustomized(false);
       setCustomizedTipPercentage("");
       setSelectedTipPercentage((amount || 0).toString());
+    }
+  };
+
+  const onBillAmountChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const amount = e.target.value;
+    if (amount === "" || amount.match(/^\d{1,}(\.\d{0,4})?$/)) {
+      setBillAmount(e.target.value);
+    }
+  };
+
+  const onNumberOfPeopleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const newValue = e.target.value;
+    const regex = /^[0-9]*$/;
+
+    if (regex.test(newValue) || newValue === "") {
+      setNumberOfPeople(newValue);
     }
   };
 
@@ -46,12 +74,7 @@ export default function Home() {
           <Input
             withDollarSign={true}
             value={billAmount}
-            onChange={(e) => {
-              const amount = e.target.value;
-              if (amount === "" || amount.match(/^\d{1,}(\.\d{0,4})?$/)) {
-                setBillAmount(e.target.value);
-              }
-            }}
+            onChange={onBillAmountChange}
           />
         </div>
         <div className="">
@@ -112,29 +135,14 @@ export default function Home() {
           <Input
             withDollarSign={false}
             value={numberOfPeople}
-            onChange={(e) => {
-              const newValue = e.target.value;
-              const regex = /^[0-9]*$/;
-
-              if (regex.test(newValue) || newValue === "") {
-                setNumberOfPeople(newValue);
-              }
-            }}
+            onChange={onNumberOfPeopleChange}
           />
         </div>
       </div>
       <div className="mb-3 md:mb-0 md:mr-3"></div>
       <Result
-        tipAmountPerPerson={calculateTipAmount(
-          parseFloat(billAmount),
-          parseInt(numberOfPeople),
-          parseInt(selectedTipPercentage)
-        )}
-        totalAmountPerPerson={calculateTotalAmountAmount(
-          parseFloat(billAmount),
-          parseInt(numberOfPeople),
-          parseInt(selectedTipPercentage)
-        )}
+        tipAmountPerPerson={tipAmountPerPerson}
+        totalAmountPerPerson={totalAmountPerPerson}
         onResetClicked={onResetClicked}
       />
     </main>
