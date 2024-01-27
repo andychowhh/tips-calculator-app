@@ -16,6 +16,7 @@ interface HomeState {
   billAmount: string;
   isTipCustomized: boolean;
   selectedTipPercentage: string;
+  customizedPercentage: string;
   numberOfPeople: string;
 }
 
@@ -32,6 +33,7 @@ const initialState: HomeState = {
   billAmount: "",
   isTipCustomized: false,
   selectedTipPercentage: "",
+  customizedPercentage: "",
   numberOfPeople: "",
 };
 
@@ -47,11 +49,13 @@ function reducer(state: HomeState, action: HomeAction) {
       return {
         ...state,
         selectedTipPercentage: (payload?.tipPercentage || 0).toString(),
+        customizedPercentage: "",
       };
     case HomeActionType.CUSTOMIZE_TIP_PERCENTAGE:
       return {
         ...state,
-        selectedTipPercentage: (payload?.tipPercentage || 0).toString(),
+        customizedPercentage: (payload?.tipPercentage || 0).toString(),
+        selectedTipPercentage: "",
       };
     case HomeActionType.UPDATE_NUMBER_OF_PEOPLE:
       return {
@@ -71,19 +75,28 @@ export default function Home() {
     billAmount,
     isTipCustomized,
     selectedTipPercentage,
+    customizedPercentage,
     numberOfPeople,
   } = state;
 
   const tipAmountPerPerson = calculateTipAmount(
     parseFloat(billAmount),
     parseInt(numberOfPeople),
-    parseInt(selectedTipPercentage)
+    parseInt(
+      selectedTipPercentage !== ""
+        ? selectedTipPercentage
+        : customizedPercentage
+    )
   );
 
   const totalAmountPerPerson = calculateTotalAmountAmount(
     parseFloat(billAmount),
     parseInt(numberOfPeople),
-    parseInt(selectedTipPercentage)
+    parseInt(
+      selectedTipPercentage !== ""
+        ? selectedTipPercentage
+        : customizedPercentage
+    )
   );
 
   const onTipPercentageButtonClicked = (amount: number): void => {
@@ -185,7 +198,7 @@ export default function Home() {
             <TipsPercentageButton
               isCustomized={true}
               isSelected={isTipCustomized}
-              value={selectedTipPercentage}
+              value={customizedPercentage}
               onClick={onCustomizedTipPercentageChanged}
             />
           </div>
