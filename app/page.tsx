@@ -5,8 +5,9 @@ import { Input, TipsPercentageButton, Result } from "app/components";
 import { calculateTipAmount, calculateTotalAmountAmount } from "app/utils";
 
 enum HomeActionType {
-  SELECT_TIP_PERCENTAGE,
   UPDATE_BILL_AMOUNT,
+  SELECT_TIP_PERCENTAGE,
+  CUSTOMIZE_TIP_PERCENTAGE,
   UPDATE_NUMBER_OF_PEOPLE,
   RESET_ALL,
 }
@@ -15,7 +16,6 @@ interface HomeState {
   billAmount: string;
   isTipCustomized: boolean;
   selectedTipPercentage: string;
-  customizedTipPercentage: string;
   numberOfPeople: string;
 }
 
@@ -32,7 +32,6 @@ const initialState: HomeState = {
   billAmount: "",
   isTipCustomized: false,
   selectedTipPercentage: "",
-  customizedTipPercentage: "",
   numberOfPeople: "",
 };
 
@@ -47,7 +46,11 @@ function reducer(state: HomeState, action: HomeAction) {
     case HomeActionType.SELECT_TIP_PERCENTAGE:
       return {
         ...state,
-        customizedTipPercentage: "",
+        selectedTipPercentage: (payload?.tipPercentage || 0).toString(),
+      };
+    case HomeActionType.CUSTOMIZE_TIP_PERCENTAGE:
+      return {
+        ...state,
         selectedTipPercentage: (payload?.tipPercentage || 0).toString(),
       };
     case HomeActionType.UPDATE_NUMBER_OF_PEOPLE:
@@ -68,7 +71,6 @@ export default function Home() {
     billAmount,
     isTipCustomized,
     selectedTipPercentage,
-    customizedTipPercentage,
     numberOfPeople,
   } = state;
 
@@ -84,13 +86,19 @@ export default function Home() {
     parseInt(selectedTipPercentage)
   );
 
-  const onTipPercentageButtonClicked = (
-    amount: number,
-    isCustomized: boolean
-  ): void => {
+  const onTipPercentageButtonClicked = (amount: number): void => {
     dispatch({
       type: HomeActionType.SELECT_TIP_PERCENTAGE,
       payload: { tipPercentage: amount },
+    });
+  };
+
+  const onCustomizedTipPercentageChanged = (
+    amount: string | undefined
+  ): void => {
+    dispatch({
+      type: HomeActionType.CUSTOMIZE_TIP_PERCENTAGE,
+      payload: { tipPercentage: parseInt(amount ?? "") },
     });
   };
 
@@ -123,15 +131,15 @@ export default function Home() {
   return (
     <main className="flex flex-col justify-between max-w-5xl min-h-screen bg-white font-mono text-cyan p-5 m-auto md:flex-row md:w-11/12 md:min-h-fit md:rounded md:py-8">
       <div className="flex flex-col justify-between flex-1">
-        <div className="">
-          <span className="">Bill</span>
+        <div>
+          <span>Bill</span>
           <Input
             withDollarSign={true}
             value={billAmount}
             onChange={onBillAmountChange}
           />
         </div>
-        <div className="">
+        <div>
           <span>Select Tip %</span>
           <div className="grid grid-cols-2 justify-between gap-3 sm:grid-cols-3">
             <TipsPercentageButton
@@ -140,7 +148,7 @@ export default function Home() {
               isSelected={
                 !isTipCustomized && parseInt(selectedTipPercentage) === 5
               }
-              onClick={() => onTipPercentageButtonClicked(5, false)}
+              onClick={() => onTipPercentageButtonClicked(5)}
             />
             <TipsPercentageButton
               value="10"
@@ -148,7 +156,7 @@ export default function Home() {
               isSelected={
                 !isTipCustomized && parseInt(selectedTipPercentage) === 10
               }
-              onClick={() => onTipPercentageButtonClicked(10, false)}
+              onClick={() => onTipPercentageButtonClicked(10)}
             />
             <TipsPercentageButton
               value="15"
@@ -156,7 +164,7 @@ export default function Home() {
               isSelected={
                 !isTipCustomized && parseInt(selectedTipPercentage) === 15
               }
-              onClick={() => onTipPercentageButtonClicked(15, false)}
+              onClick={() => onTipPercentageButtonClicked(15)}
             />
             <TipsPercentageButton
               value="25"
@@ -164,7 +172,7 @@ export default function Home() {
               isSelected={
                 !isTipCustomized && parseInt(selectedTipPercentage) === 25
               }
-              onClick={() => onTipPercentageButtonClicked(25, false)}
+              onClick={() => onTipPercentageButtonClicked(25)}
             />
             <TipsPercentageButton
               value="50"
@@ -172,15 +180,13 @@ export default function Home() {
               isSelected={
                 !isTipCustomized && parseInt(selectedTipPercentage) === 50
               }
-              onClick={() => onTipPercentageButtonClicked(50, false)}
+              onClick={() => onTipPercentageButtonClicked(50)}
             />
             <TipsPercentageButton
               isCustomized={true}
               isSelected={isTipCustomized}
-              value={customizedTipPercentage?.toString()}
-              onClick={(val) => {
-                onTipPercentageButtonClicked(parseFloat(val ?? "") ?? 0, true);
-              }}
+              value={selectedTipPercentage}
+              onClick={onCustomizedTipPercentageChanged}
             />
           </div>
         </div>
