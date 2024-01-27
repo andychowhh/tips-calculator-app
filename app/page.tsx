@@ -1,19 +1,76 @@
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent, useReducer } from "react";
 import { Input, TipsPercentageButton, Result } from "app/components";
 import { calculateTipAmount, calculateTotalAmountAmount } from "app/utils";
 
+enum HomeActionType {
+  SELECT_TIP_PERCENTAGE,
+  UPDATE_BILL_AMOUNT,
+  UPDATE_NUMBER_OF_PEOPLE,
+  RESET_ALL,
+}
+
+interface HomeState {
+  billAmount: string;
+  isTipCustomized: boolean;
+  selectedTipPercentage: string;
+  customizedTipPercentage: string;
+  numberOfPeople: string;
+}
+
+interface HomeAction {
+  type: HomeActionType;
+  payload?: {
+    billAmount?: string;
+    tipPercentage?: number;
+    numberOfPeople?: string;
+  };
+}
+
+const initialState: HomeState = {
+  billAmount: "",
+  isTipCustomized: false,
+  selectedTipPercentage: "",
+  customizedTipPercentage: "",
+  numberOfPeople: "",
+};
+
+function reducer(state: HomeState, action: HomeAction) {
+  const { type, payload } = action;
+  switch (type) {
+    case HomeActionType.UPDATE_BILL_AMOUNT:
+      return {
+        ...state,
+        billAmount: payload?.billAmount ?? "",
+      };
+    case HomeActionType.SELECT_TIP_PERCENTAGE:
+      return {
+        ...state,
+        customizedTipPercentage: "",
+        selectedTipPercentage: (payload?.tipPercentage || 0).toString(),
+      };
+    case HomeActionType.UPDATE_NUMBER_OF_PEOPLE:
+      return {
+        ...state,
+        numberOfPeople: payload?.numberOfPeople ?? "",
+      };
+    case HomeActionType.RESET_ALL:
+      return initialState;
+    default:
+      return state;
+  }
+}
+
 export default function Home() {
-  const [billAmount, setBillAmount] = useState<string>("");
-  const [isTipCustomized, setIsTipCustomized] = useState<boolean>(false);
-  const [selectedTipPercentage, setSelectedTipPercentage] = useState<string>(
-    ""
-  );
-  const [customizedTipPercentage, setCustomizedTipPercentage] = useState<
-    string
-  >("");
-  const [numberOfPeople, setNumberOfPeople] = useState<string>("");
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const {
+    billAmount,
+    isTipCustomized,
+    selectedTipPercentage,
+    customizedTipPercentage,
+    numberOfPeople,
+  } = state;
 
   const tipAmountPerPerson = calculateTipAmount(
     parseFloat(billAmount),
@@ -31,21 +88,19 @@ export default function Home() {
     amount: number,
     isCustomized: boolean
   ): void => {
-    if (isCustomized) {
-      setIsTipCustomized(true);
-      setCustomizedTipPercentage((amount || 0).toString());
-      setSelectedTipPercentage("");
-    } else {
-      setIsTipCustomized(false);
-      setCustomizedTipPercentage("");
-      setSelectedTipPercentage((amount || 0).toString());
-    }
+    dispatch({
+      type: HomeActionType.SELECT_TIP_PERCENTAGE,
+      payload: { tipPercentage: amount },
+    });
   };
 
   const onBillAmountChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const amount = e.target.value;
     if (amount === "" || amount.match(/^\d{1,}(\.\d{0,4})?$/)) {
-      setBillAmount(e.target.value);
+      dispatch({
+        type: HomeActionType.UPDATE_BILL_AMOUNT,
+        payload: { billAmount: amount },
+      });
     }
   };
 
@@ -54,16 +109,15 @@ export default function Home() {
     const regex = /^[0-9]*$/;
 
     if (regex.test(newValue) || newValue === "") {
-      setNumberOfPeople(newValue);
+      dispatch({
+        type: HomeActionType.UPDATE_NUMBER_OF_PEOPLE,
+        payload: { numberOfPeople: newValue },
+      });
     }
   };
 
   const onResetClicked = (): void => {
-    setBillAmount("");
-    setSelectedTipPercentage("");
-    setCustomizedTipPercentage("");
-    setNumberOfPeople("");
-    setIsTipCustomized(false);
+    dispatch({ type: HomeActionType.RESET_ALL });
   };
 
   return (
@@ -130,7 +184,7 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="">
+        <div>
           <span>Number of People</span>
           <Input
             withDollarSign={false}
